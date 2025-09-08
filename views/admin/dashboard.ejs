@@ -1,0 +1,66 @@
+ <%- include('../common/header.ejs'); %>
+  <h3 class="text-center">Create Project</h3>
+  <div class="container">
+    <form action="/admin/project/create" method="POST">
+      <div class="form-group">
+        <label for="name">Project Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Project Name" required />
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary btn-block">Create</button>
+    </form>
+  </div>
+
+  <h3 class="text-center mt-3">All Projects</h3>
+  <ul class="list-group">
+    <% projects.forEach(project => { %>
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5><%= project.name %></h5>
+          <span class="badge <%= project.status==='on-going'?'badge-info':project.status==='almost end'?'badge-warning':'badge-success' %>"><%= project.status %></span>
+        </div>
+        <br>
+        <span class="text-muted">Assigned Users: </span>
+        <% project.assignedUsers.forEach(u => { %>
+          <span class="badge badge-light"><%= u.name %> (<%= u.email %>)</span>
+        <% }) %>
+        <br><br>
+
+        <!-- Assign User with Dropdown -->
+        <form action="/admin/project/assign" method="POST">
+          <div class="form-group">
+            <input type="hidden" name="projectId" value="<%= project._id %>">
+            <select name="userId" class="custom-select" required>
+              <option value="">-- Select User --</option>
+              <% users.forEach(user => { %>
+                <option value="<%= user._id %>">
+                  <%= user.name %> (<%= user.email %>)
+                </option>
+              <% }) %>
+            </select>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary btn-block">Assign</button>
+        </form>
+        <br><br>
+        <!-- Update Status -->
+        <form action="/admin/project/status" method="POST">
+          <input type="hidden" name="projectId" value="<%= project._id %>">
+          <div class="form-group">
+            <select name="status" class="custom-select">
+              <option value="on-going" <%= project.status==="on-going"?"selected":"" %>>On-going</option>
+              <option value="almost end" <%= project.status==="almost end"?"selected":"" %>>Almost End</option>
+              <option value="finished" <%= project.status==="finished"?"selected":"" %>>Finished</option>
+            </select>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary btn-block">Update Status</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+
+  <br>
+  <a href="/logout" class="btn btn-secondary btn-block">Logout</a>
+ <%- include('../common/header.ejs'); %>
+

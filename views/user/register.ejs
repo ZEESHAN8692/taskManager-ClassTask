@@ -1,0 +1,23 @@
+ <%- include('../common/header.ejs'); %>
+  <div class="container mt-5">
+    <h2 class="text-center">Register User</h2>
+    <form action="/register-user" method="POST">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary btn-block">Register as User</button>
+    </form>
+    <a href="/login" class="btn btn-secondary btn-block mt-3">Login</a>
+  </div>
+ <%- include('../common/header.ejs'); %>
+

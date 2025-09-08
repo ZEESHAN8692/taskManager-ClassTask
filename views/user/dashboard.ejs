@@ -1,0 +1,17 @@
+ <%- include('../common/header.ejs'); %>
+  <div class="container mt-5">
+    <h2 class="text-center">Welcome User</h2>
+
+    <h3 class="mt-3">Your Projects</h3>
+    <ul class="list-group">
+      <% projects.forEach(project => { %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <b><%= project.name %></b>
+          <span class="badge <%= project.status==='on-going'?'badge-info':project.status==='almost end'?'badge-warning':'badge-success' %>"><%= project.status %></span>
+        </li>
+      <% }) %>
+    </ul>
+
+    <a href="/logout" class="btn btn-secondary mt-3">Logout</a>
+  </div>
+  <%- include('../common/footer.ejs'); %>
