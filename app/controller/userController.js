@@ -17,7 +17,10 @@ const generateRefreshToken = (user) => {
 class UserController {
 
     async loginGet(req, res) {
-        res.render("user/login");
+
+        const rememberEmail= req.cookies.rememberEmail
+        const rememberPassword= req.cookies.rememberPassword
+        res.render("user/login" ,{rememberEmail,rememberPassword});
     }
     async registerUserGet(req, res) {
         res.render("user/register");
@@ -72,7 +75,7 @@ class UserController {
     }
     async login(req, res) {
         try {
-            const { email, password } = req.body;
+            const { email, password, rememberMe } = req.body;
             const user = await User.findOne({ email });
             if (!user) {
                 return res.status(400).json({ message: "Invalid credentials" });
@@ -85,6 +88,14 @@ class UserController {
             const refreshToken = generateRefreshToken(user);
             res.cookie("accessToken", accessToken, { httpOnly: true });
             res.cookie("refreshToken", refreshToken, { httpOnly: true });
+            
+            if (rememberMe === "1") {
+             
+                res.cookie("rememberEmail", email, { maxAge: 1000 * 60 * 60 * 24 * 7 });
+                res.cookie("rememberPassword", password, { maxAge: 1000 * 60 * 60 * 24 * 7 });
+
+            }
+            
             if (user.userType === "a") {
                 res.redirect("/admin/dashboard");
             } else {

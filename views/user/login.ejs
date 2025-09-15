@@ -4,14 +4,21 @@
   <form action="/login" method="POST">
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
+      <input type="email" class="form-control" id="email" name="email" placeholder="Email" required value="<%=rememberEmail%>" />
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
+      <input type="password" class="form-control" id="password" name="password" placeholder="Password" required value="<%=rememberPassword%>" />
+    </div>
+    <div class="form-group form-check">
+      <input class="form-check-input" type="checkbox" value="1" id="rememberMe" name="rememberMe">
+      <label class="form-check-label" for="rememberMe">
+        Remember Me
+      </label>
     </div>
     <br>
     <button type="submit" class="btn btn-primary btn-block">Login</button>
   </form>
 </div>
 <%- include('../common/footer.ejs'); %>
+
